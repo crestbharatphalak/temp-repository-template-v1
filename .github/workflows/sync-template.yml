@@ -20,6 +20,9 @@ jobs:
           TEMPLATE_REPO: crestbharatphalak/temp-repository-test
         
         run: |
+
+          DATE=$(date +%d-%m-%Y-%H-%M)
+
           git config --global user.email "bharat.p@crestinfosystems.com"
           git config --global user.name "Sync-Bot"
 
@@ -39,21 +42,20 @@ jobs:
 
           if [ "$MERGE_EXIT_CODE" -ne 0 ]; then
             echo "Conflicts Got -> Creating PR for Manual Check..."
-            
-            # Push the branch without committing conflicts
-            git add . || true
-            git status
+
+            git add .
+            git commit -m "Conflict merge from template - manual resolution needed" || true
+
             git push origin $BRANCH_NAME
 
-            # Raise PR - GitHub will show merge conflict
             curl -X POST -H "Authorization: token ${GH_PAT}" \
               -H "Accept: application/vnd.github+json" \
               https://api.github.com/repos/$REPO/pulls \
               -d '{
-                "title": "Merge from template - manual conflict resolution needed ($(date +%d-%m-%Y-%H-%M))",
+                "title": "Merge from template - manual conflict resolution needed '"$DATE"'",
                 "head": "'"$BRANCH_NAME"'",
                 "base": "main",
-                "body": "This PR includes changes from the template repo and requires manual conflict resolution."
+                "body": "Merge conflicts need to be resolved manually in this PR. Please do not merge until resolved."
               }'
 
           else
