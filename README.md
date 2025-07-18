@@ -1,1 +1,1 @@
-# temp-repository-test
+Testing Sync Changes For Template Repositories
