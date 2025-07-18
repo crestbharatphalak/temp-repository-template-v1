@@ -7,6 +7,7 @@ on:
 
 jobs:
   sync:
+    if: github.repository == 'crestbharatphalak/temp-repository-test'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout template repo
