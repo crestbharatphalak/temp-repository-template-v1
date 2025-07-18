@@ -20,6 +20,9 @@ jobs:
           TEMPLATE_REPO: crestbharatphalak/temp-repository-test
         
         run: |
+
+          DATE=$(date +%d-%m-%Y-%H-%M)
+
           git config --global user.email "bharat.p@crestinfosystems.com"
           git config --global user.name "Sync-Bot"
 
@@ -49,7 +52,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               https://api.github.com/repos/$REPO/pulls \
               -d '{
-                "title": "Merge from template - manual conflict resolution needed $(date +%d-%m-%Y-%H-%M)",
+                "title": "Merge from template - manual conflict resolution needed '"$DATE"'",
                 "head": "'"$BRANCH_NAME"'",
                 "base": "main",
                 "body": "Merge conflicts need to be resolved manually in this PR. Please do not merge until resolved."
