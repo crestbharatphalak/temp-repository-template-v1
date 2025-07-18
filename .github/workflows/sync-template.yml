@@ -17,7 +17,7 @@ jobs:
           git config --global user.email "bharat.p@crestinfosystems.com"
           git config --global user.name "Sync-Bot"
           
-          git clone https://github.com/crestbharatphalak/temp-repository-template-v1.git child-repo
+          git clone https://x-access-token:${{ secrets.GH_PAT }}@github.com/crestbharatphalak/temp-repository-template-v1.git child-repo
           cd child-repo
 
           git remote add template https://github.com/crestbharatphalak/temp-repository-test.git
