@@ -38,16 +38,19 @@ jobs:
           set -e
 
           if [ "$MERGE_EXIT_CODE" -ne 0 ]; then
-            echo "Merge conflict occurred, pushing branch and creating PR..."
-            git add .
-            git commit -m "Conflict merge from template - manual resolution needed" || true
+            echo "Conflicts Got -> Creating PR for Manual Check..."
+            
+            # Push the branch without committing conflicts
+            git add . || true
+            git status
             git push origin $BRANCH_NAME
 
+            # Raise PR - GitHub will show merge conflict
             curl -X POST -H "Authorization: token ${GH_PAT}" \
               -H "Accept: application/vnd.github+json" \
               https://api.github.com/repos/$REPO/pulls \
               -d '{
-                "title": "Merge from template - manual conflict resolution needed",
+                "title": "Merge from template - manual conflict resolution needed ($(date +%d-%m-%Y-%H-%M))",
                 "head": "'"$BRANCH_NAME"'",
                 "base": "main",
                 "body": "This PR includes changes from the template repo and requires manual conflict resolution."
@@ -55,10 +58,12 @@ jobs:
 
           else
             echo "No conflicts, merge successful"
+
             git push origin $BRANCH_NAME
             git checkout main
             git merge $BRANCH_NAME
             git push origin main
+
           fi
 
       # - name: Sync with child repo
