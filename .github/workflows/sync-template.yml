@@ -28,7 +28,7 @@ jobs:
           git remote add template https://github.com/$TEMPLATE_REPO.git
           git fetch template
 
-          BRANCH_NAME=template-sync-$(date +%Y-%m-%d-%H%M)
+          BRANCH_NAME=template-sync-$(date +%d-%m-%Y-%m-%H%M)
           git checkout -b $BRANCH_NAME
 
           set +e
