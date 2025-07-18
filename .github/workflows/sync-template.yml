@@ -1,0 +1,29 @@
+name: Sync Template to Child
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout template repo
+        uses: actions/checkout@v3
+
+      - name: Sync with child repo
+        run: |
+          git config --global user.email "bharat.p@crestinfosystems.com"
+          git config --global user.name "Sync-Bot"
+          
+          git clone https://github.com/crestbharatphalak/temp-repository-template-v1.git child-repo
+          cd child-repo
+
+          git remote add template https://github.com/crestbharatphalak/temp-repository-test.git
+          git pull template main --allow-unrelated-histories
+
+          git push origin main
+        env:
+          GIT_ASKPASS: echo
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
