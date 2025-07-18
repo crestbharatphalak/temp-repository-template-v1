@@ -40,6 +40,9 @@ jobs:
           if [ "$MERGE_EXIT_CODE" -ne 0 ]; then
             echo "Conflicts Got -> Creating PR for Manual Check..."
 
+            git add .
+            git commit -m "Conflict merge from template - manual resolution needed" || true
+
             git push origin $BRANCH_NAME
 
             curl -X POST -H "Authorization: token ${GH_PAT}" \
@@ -49,7 +52,7 @@ jobs:
                 "title": "Merge from template - manual conflict resolution needed ($(date +%d-%m-%Y-%H-%M))",
                 "head": "'"$BRANCH_NAME"'",
                 "base": "main",
-                "body": "⚠️ Merge conflicts need to be resolved manually in this PR. Please do not merge until resolved."
+                "body": "Merge conflicts need to be resolved manually in this PR. Please do not merge until resolved."
               }'
 
           else
