@@ -1,1 +1,1 @@
-Testing Sync Changes For Template Repositories
+Testing Sync Changes For Template Repositorie
