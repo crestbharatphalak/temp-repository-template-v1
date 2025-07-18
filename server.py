@@ -9,5 +9,5 @@ agent = Agent(
 )
 
 # Test with specific queries
-response = agent("Analyze this data and create a summary: [Item, Cost 2024, Cost 2025\n Apple, $0.47, $0.55, Banana, $0.13, $0.47\n]")
+response = agent("Analyze this data and create a summary: [Item, Cost 2023, Cost 2024, Cost 2025\n Apple, $0.46, $0.47, $0.55, Banana, $0.40, $0.13, $0.47\n]")
 print(str(response))
